@@ -1,4 +1,4 @@
-OBJ = main.o
+OBJ = main.o maluch.o
 
 CFLAGS=-std=c17 -Wall -Wextra
 
@@ -6,7 +6,7 @@ ifeq ($(DEBUG), 1)
 	CFLAGS += -Og -ggdb
 endif
 
-# LDFLAGS=-lX11 -lGL -lm -lXrandr
+# LDLIBS =-lX11 -lGL -lm -lXrandr
 
 all: emulator
 

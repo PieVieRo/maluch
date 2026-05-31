@@ -77,9 +77,9 @@ shell_loop:
         ; PRINT PROMPT
         mov temp_0, '>'
         call kernel_screen_print_char
-         mov temp_0, ' '
+        mov temp_0, ' '
  repeat 100h - 16, idx:0
-         stw buffer+idx, temp_0
+        stw buffer+idx, temp_0
  end repeat
 
 shell_cmd_wait:
