@@ -34,6 +34,10 @@ typedef struct Maluch {
     uint16_t ram[0x8000];
     uint16_t vram[COLS * ROWS];
     struct {
+        uint8_t fg;
+        uint8_t bg;
+    } colors[COLS * ROWS];
+    struct {
         uint8_t sign : 1;
         uint8_t overflow : 1;
         uint8_t carry : 1;
@@ -48,6 +52,9 @@ typedef struct Insn {
     uint16_t immediate : 1;
     uint16_t opcode : 4;
 } Insn;
+
+
+void maluchInit(Maluch *const maluch);
 
 // MISC
 char *regToText(const uint8_t reg_num);

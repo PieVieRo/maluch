@@ -2,6 +2,14 @@
 
 #include <assert.h>
 #include <stdio.h>
+#include <string.h>
+
+void maluchInit(Maluch *const maluch) {
+    memset(maluch, 0, sizeof(Maluch));
+    for(int i = 0; i < ROWS * COLS; i++) {
+        maluch->colors[i].fg = 0xFF;
+    }
+}
 
 char *regToText(const uint8_t reg_num) {
     assert(reg_num < 16 && "There are only 16 registers (r0-r15)");

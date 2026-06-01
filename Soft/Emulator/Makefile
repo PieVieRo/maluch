@@ -1,21 +1,33 @@
+TARGET = emulator
+
 OBJ = main.o maluch.o
 
-CFLAGS=-std=c17 -Wall -Wextra
+DEP = $(OBJ:.o=.d)
+
+CC ?= gcc
+PYTHON ?= python3
+CFLAGS = -std=c17 -Wall -Wextra -MMD -MP
+LDLIBS = -lX11 -lGL -lm -lXrandr
 
 ifeq ($(DEBUG), 1)
-	CFLAGS += -Og -ggdb
+    CFLAGS += -Og -ggdb
+else
+    CFLAGS += -O2
 endif
 
-# LDLIBS =-lX11 -lGL -lm -lXrandr
+# Phony targets
+.PHONY: all clean
 
-all: emulator
+all: $(TARGET) font.png
 
-emulator: $(OBJ)
-	$(CC) $(LDFLAGS) $(LDLIBS) $(CFLAGS) -o $@ $^
+$(TARGET): $(OBJ)
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
-# $(OBJ): $(OBJ_DIR)/%.o: %.c
-# 	@mkdir -p $(OBJ_DIR)
-# 	$(CC) -c $^ $(CFLAGS) -o $@
+font.png: font.fnt font_to_png.py
+	$(PYTHON) font_to_png.py
 
-clean: $(OBJ)
-	rm $(OBJ)
+clean:
+	rm -f $(OBJ) $(DEP) font.png $(TARGET)
+
+# Include dependency files
+-include $(DEP)
